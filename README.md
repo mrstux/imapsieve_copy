@@ -16,9 +16,9 @@ The imapsieve_copy is inserted into the sieve processing by modififying the
 normal report-spam and report-ham sieves. 
 
 The scan_reported_mails.sh then calls the normal rspamd-pipe-ham and 
-rspamd-pipe-spam tools, respectively, when run. This script is written as a 
-singleton, ie if a second invocation is made when the first is still in process, 
-then it will immediately exit so as to not conflict with the first.
+rspamd-pipe-spam tools, respectively, when run. The script is a bash-singleton, 
+ie if a second invocation is made when the first is still in process, then it will immediately 
+exit so as to not conflict with the first.
 
 When scan_reported_mails.sh is run it will move all currently reported mails 
 into its processing directory, process them, and then cleanup. The next time it 
@@ -112,16 +112,19 @@ this prevented removal of incoming spam/ham.
 ## Logs
 
 scan_reported_mails.sh outputs basic information to the ofelia log, and more 
-detailed information including rspamd status to the dovecot log imapsieve_copy 
-logs to the dovecot log when an email is copied.
+detailed information including rspamd status to the dovecot log. 
+
+imapsieve_copy logs to the dovecot log when an email is copied.
 
 ## Directories
 
 By default imapsieve_copy creates an `imapsieve_copy` directory in the root of 
-your vmail spool with `ham` and `spam` subdirectories. scan_reported_mails.sh
-creates a temporary `processing` directory in this `imapsieve_copy` directory, 
-with `spam` and `ham` subdirectories. These directories are not on the /tmp fs
-to prevent losing messages in the event of a restart.
+your vmail spool with `ham` and `spam` subdirectories. 
+
+scan_reported_mails.sh creates a temporary `processing` directory in this `imapsieve_copy` directory, 
+with `spam` and `ham` subdirectories. 
+
+These directories are not on the `/tmp`  fs to prevent losing messages in the event of a restart.
 
 ## Revision History
 2021-08-12 Initial Version
