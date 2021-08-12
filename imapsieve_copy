@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# modified by Stuart Espey for Mailcow usage
+
+# Original Author: Zhang Huangbin <zhb@iredmail.org>
+# Purpose: Read full email message from stdin, and save to a local file.
+
+# Usage: bash imapsieve_copy <email> <spam|ham> <output_base_dir>
+
+USER="$1"
+MSG_TYPE="$2"
+
+OUTPUT_BASE_DIR="/var/vmail/imapsieve_copy"
+OUTPUT_DIR="${OUTPUT_BASE_DIR}/${MSG_TYPE}"
+FILE="${OUTPUT_DIR}/${USER}-$(date +%Y%m%d%H%M%S)-${RANDOM}${RANDOM}.eml"
+
+OWNER="vmail"
+GROUP="vmail"
+
+for dir in "${OUTPUT_BASE_DIR}" "${OUTPUT_DIR}"; do
+    if [[ ! -d ${dir} ]]; then
+        mkdir -p ${dir}
+        chown ${OWNER}:${GROUP} ${dir}
+        chmod 0700 ${dir}
+    fi
+done
+
+cat > ${FILE} < /dev/stdin
+
+# Logging
+LOG='logger -p mail.info -t dovecot imapsieve_copy: '
+[[ $? == 0 ]] && ${LOG} "Copied one ${MSG_TYPE} email reported by ${USER}: ${FILE}"
