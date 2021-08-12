@@ -83,7 +83,7 @@ re-compile the sieves. Ofelia needs a restart to install the job scheduler which
 will scan the mails.
 
 ```
-docker-compose up -d ; docker-compose restart ofelia-mailcow
+docker-compose up -d && docker-compose restart ofelia-mailcow
 ```
 
 ## Dovecot.conf changes
