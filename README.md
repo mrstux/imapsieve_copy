@@ -33,8 +33,15 @@ Original version: [IRedMail Imapsieve](https://docs.iredmail.org/dovecot.imapsie
 
 ## Installation
 
-Extract the imapsieve_copy archive into your mailcow data/conf/dovecot 
-directory, then ensure that the permissions are correct:
+Clone the imapsieve_copy repository into your mailcow's data/conf/dovecot 
+directory, 
+
+```
+cd data/conf/dovecot 
+git clone https://github.com/mrstux/imapsieve_copy.git
+```
+
+then ensure that the permissions are correct:
 
 ```
 :/opt/mailcow-dockerized# ls -al data/conf/dovecot/imapsieve_copy/
@@ -49,7 +56,6 @@ drwxr-xr-x 6 root root 4096 Aug 12 12:31 ..
 ```
 
 Then add the following to your docker-compose.override.yml:
-
 
 ```
   dovecot-mailcow:
